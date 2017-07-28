@@ -17,7 +17,7 @@ aplhabetDictionary = dict({"a" : 0 , "b" : 0, "c": 0 ,"d" : 0, "e" : 0, "f" : 0,
  #Stores the current longest word
 longestWord = ""
 #Stores the current most occuring letter
-commonLetter = "";
+commonLetter = "s";
 #The regex pattern that matches words, pre compiled for later use
 pattern = re.compile(r'([a-zA-Z]+)')
 
@@ -25,7 +25,8 @@ pattern = re.compile(r'([a-zA-Z]+)')
 #Checks whether the words are already in dictionary
 # If true it updates to the counter to the new value
 # If false it adds the word with a initial count of 1
-def addWordsFromLine( words):
+def addWordsFromLine(words):
+    global longestWord
     #Iterate through the words as they come in as a array
     #from the regex
     for word in words:
@@ -36,17 +37,28 @@ def addWordsFromLine( words):
         #Otherwise add the word and initialize with a value of 1
         else:
             wordDictionary[word] = 1
+            #Check whether the word is longer than the current longest on
+            if len(word) > len(longestWord):
+                print longestWord
+                longestWord = word
+
+#Counts the letters in each word and adds them to corresponding ones
+#def countLetters
 
 #Prints the output of the wordDictionary in a pretty format
 def printDictionaryWords(dictionary):
-    print "*---------------------------------------------*"
+    print "             *Welcome to web scraper* "
+    print "\n*---------------------------------------------*"
     print "| Word                           |  WordCount |"
     print "*---------------------------------------------*"
     #Iterate through each word and print the key and value
     for word in dictionary.items():
         print "|%20s            |     %5d  |" % word
     print "*---------------------------------------------*"
-
+    print "| Longest Word: %20s          |" % longestWord
+    print "*---------------------------------------------*"
+    print "| Most common letter: %s                       |" % commonLetter
+    print "*---------------------------------------------*"
 # Override of handler methods for the parser
 class MyHTMLParser(HTMLParser):
 

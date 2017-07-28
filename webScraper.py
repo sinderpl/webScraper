@@ -10,14 +10,14 @@ from HTMLParser import HTMLParser
 wordDictionary = dict({})
 #Stores letters for now, the values will be updated to determine the
 # most occuring letter
-aplhabetDictionary = dict({"a" : 0 , "b" : 0, "c": 0 ,"d" : 0, "e" : 0, "f" : 0, "g" : 0,
+alphabetDictionary = dict({"a" : 0 , "b" : 0, "c": 0 ,"d" : 0, "e" : 0, "f" : 0, "g" : 0,
 "h" : 0, "i" : 0 , "j" : 0, "k" : 0, "l" : 0 , "m" : 0, "n" : 0, "o" : 0, "p": 0,
 "q": 0, "r" : 0, "s" : 0, "t" : 0, "u" : 0, "v": 0, "w" : 0, "x" : 0,
  "y" : 0, "z" : 0})
  #Stores the current longest word
 longestWord = ""
 #Stores the current most occuring letter
-commonLetter = "s";
+commonLetter = "";
 #The regex pattern that matches words, pre compiled for later use
 pattern = re.compile(r'([a-zA-Z]+)')
 
@@ -33,9 +33,11 @@ def addWordsFromLine(words):
         #If the word is already in there update its occurence counter
         if word in wordDictionary:
             wordDictionary[word] += 1
+            countLetters(word)
             #wordDictionary.get(word) and wordDictionary.update({word: wordDictionary[word]+1})
         #Otherwise add the word and initialize with a value of 1
         else:
+            countLetters(word)
             wordDictionary[word] = 1
             #Check whether the word is longer than the current longest on
             if len(word) > len(longestWord):
@@ -43,7 +45,19 @@ def addWordsFromLine(words):
                 longestWord = word
 
 #Counts the letters in each word and adds them to corresponding ones
-#def countLetters
+def countLetters(word):
+    print "counting letters"
+    word = word.lower()
+    #global alphabetDictionary
+    for char in word:
+        alphabetDictionary[char] += 1
+
+def findCommonLetter(dictionary):
+    letterCount = 0
+    for letter in dictionary:
+        if letter > letterCount:
+            commonLetter = letter
+
 
 #Prints the output of the wordDictionary in a pretty format
 def printDictionaryWords(dictionary):
@@ -59,6 +73,9 @@ def printDictionaryWords(dictionary):
     print "*---------------------------------------------*"
     print "| Most common letter: %s                       |" % commonLetter
     print "*---------------------------------------------*"
+
+
+
 # Override of handler methods for the parser
 class MyHTMLParser(HTMLParser):
 
@@ -70,9 +87,6 @@ class MyHTMLParser(HTMLParser):
         #Through the custom method
         if f:
             addWordsFromLine(f)
-
-
-
 
 # instantiate the parser and fed it some HTML
 parser = MyHTMLParser()
@@ -87,3 +101,5 @@ for line in data:
 
 #Call on the print method
 printDictionaryWords(wordDictionary)
+
+print alphabetDictionary

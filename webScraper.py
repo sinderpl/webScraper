@@ -4,7 +4,7 @@ import urllib2
 import re
 #HTML parser
 from HTMLParser import HTMLParser
-
+import operator
 
 #Stores the words as keys and their occurence counter as the value
 wordDictionary = dict({})
@@ -17,7 +17,7 @@ alphabetDictionary = dict({"a" : 0 , "b" : 0, "c": 0 ,"d" : 0, "e" : 0, "f" : 0,
  #Stores the current longest word
 longestWord = ""
 #Stores the current most occuring letter
-commonLetter = "";
+commonLetter = "e";
 #The regex pattern that matches words, pre compiled for later use
 pattern = re.compile(r'([a-zA-Z]+)')
 
@@ -41,23 +41,24 @@ def addWordsFromLine(words):
             wordDictionary[word] = 1
             #Check whether the word is longer than the current longest on
             if len(word) > len(longestWord):
-                print longestWord
                 longestWord = word
 
 #Counts the letters in each word and adds them to corresponding ones
 def countLetters(word):
-    print "counting letters"
     word = word.lower()
-    #global alphabetDictionary
     for char in word:
         alphabetDictionary[char] += 1
 
 def findCommonLetter(dictionary):
-    letterCount = 0
-    for letter in dictionary:
-        if letter > letterCount:
-            commonLetter = letter
 
+    commonLetter = max(dictionary.iteritems(), key=operator.itemgetter(1))[0]
+
+    '''
+    letterCount = 0
+    for char in dictionary:
+        if char > letterCount:
+            commonLetter = letter
+    '''
 
 #Prints the output of the wordDictionary in a pretty format
 def printDictionaryWords(dictionary):
@@ -67,12 +68,13 @@ def printDictionaryWords(dictionary):
     print "*---------------------------------------------*"
     #Iterate through each word and print the key and value
     for word in dictionary.items():
-        print "|%20s            |     %5d  |" % word
+        print "|%20s            |     %5d  |" % (word)
     print "*---------------------------------------------*"
-    print "| Longest Word: %20s          |" % longestWord
+    print "| Most common letter: %5s   | Count: %5d  |" % (commonLetter, alphabetDictionary[commonLetter])
     print "*---------------------------------------------*"
-    print "| Most common letter: %s                       |" % commonLetter
+    print "| Longest Word: %20s          |" % (longestWord)
     print "*---------------------------------------------*"
+
 
 
 
@@ -88,18 +90,31 @@ class MyHTMLParser(HTMLParser):
         if f:
             addWordsFromLine(f)
 
-# instantiate the parser and fed it some HTML
-parser = MyHTMLParser()
-data = urllib2.urlopen("http://testing-ground.scraping.pro/blocks")
-#"http://webscraper.io/test-sites/e-commerce/allinone/computers")
-#https://facebook.com")
-#"http://testing-ground.scraping.pro/blocks")
+#Run Method
+def runParser():
+    # Instantiate the parser and feed it some HTML
+    parser = MyHTMLParser()
 
-for line in data:
-    parser.feed(line)
-   #print line+"\n ----------------------"
+    data = urllib2.urlopen("http://testing-ground.scraping.pro/blocks")
 
-#Call on the print method
-printDictionaryWords(wordDictionary)
+    # Test scraping websites
+    #"http://webscraper.io/test-sites/e-commerce/allinone/computers")
+    #https://facebook.com")
+    #"http://testing-ground.scraping.pro/blocks")
 
-print alphabetDictionary
+    for line in data:
+        parser.feed(line)
+
+#Main Method
+def main():
+
+    #Run the parser
+    runParser()
+
+    #Find the common Letter
+    findCommonLetter(alphabetDictionary)
+
+    #Call on the print method
+    printDictionaryWords(wordDictionary)
+
+if __name__ == "__main__": main()

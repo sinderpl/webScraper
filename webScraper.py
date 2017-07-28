@@ -52,4 +52,9 @@ for line in data:
     parser.feed(line)
    #print line+"\n ----------------------"
 
-print wordDictionary
+print "*---------------------------------------------*"
+print "| Word                           |  WordCount |"
+print "*---------------------------------------------*"
+for word in wordDictionary.items():
+    print "|%20s            |     %5d  |" % word
+print "*---------------------------------------------*"

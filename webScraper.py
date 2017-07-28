@@ -22,7 +22,8 @@ class MyHTMLParser(HTMLParser):
         #print "Encountered some data  :", data
         pattern = re.compile(r'([a-zA-Z]+)') #r'([A-Z]+)')
         f = re.findall(pattern,data)
-        print "New data: ", f
+        if f:
+            print "New data: ", f
 
 # instantiate the parser and fed it some HTML
 parser = MyHTMLParser()

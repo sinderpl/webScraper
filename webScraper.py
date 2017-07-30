@@ -45,24 +45,17 @@ def addWordsFromLine(words):
 
 #Counts the letters in each word and adds them to corresponding ones
 def countLetters(word):
+    #TODO Could be updated to add chars to the dictionary as you go along
     word = word.lower()
     for char in word:
         alphabetDictionary[char] += 1
 
 def findCommonLetter(dictionary):
-
     commonLetter = max(dictionary.iteritems(), key=operator.itemgetter(1))[0]
 
-    '''
-    letterCount = 0
-    for char in dictionary:
-        if char > letterCount:
-            commonLetter = letter
-    '''
 
 #Prints the output of the wordDictionary in a pretty format
 def printDictionaryWords(dictionary):
-    print "             *Welcome to web scraper* "
     print "\n*---------------------------------------------*"
     print "| Word                           |  WordCount |"
     print "*---------------------------------------------*"
@@ -84,22 +77,22 @@ class MyHTMLParser(HTMLParser):
     #We are only concerned with text data so every other tag is ignored
     def handle_data(self, data):
         #Find all of the words matching the regex in the data
-        f = re.findall(pattern,data)
+        results = re.findall(pattern,data)
         #If the return list is not empty start adding them to the dictionary
         #Through the custom method
-        if f:
-            addWordsFromLine(f)
+        if results:
+            addWordsFromLine(results)
 
 #Run Method
 def runParser():
     # Instantiate the parser and feed it some HTML
     parser = MyHTMLParser()
 
+    #Copy the data from the website specified
     data = urllib2.urlopen("http://testing-ground.scraping.pro/blocks")
 
     # Test scraping websites
     #"http://webscraper.io/test-sites/e-commerce/allinone/computers")
-    #https://facebook.com")
     #"http://testing-ground.scraping.pro/blocks")
 
     for line in data:
@@ -107,6 +100,8 @@ def runParser():
 
 #Main Method
 def main():
+
+    print "             *Welcome to the web scraper* "
 
     #Run the parser
     runParser()

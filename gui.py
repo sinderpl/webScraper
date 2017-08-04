@@ -41,9 +41,15 @@ class simpleapp_tk(Tkinter.Tk):
         self.webScraper.runParser(self.linkEntry.get())
 
 
+        #Show the most common letter count
         commonLetterStr = "The most common letter is: %s with a count of: %d" % (self.webScraper.getCommonLetter())
         self.commonLetterLabel = Label(self, text = commonLetterStr)
         self.commonLetterLabel.grid(column=2,row=0,sticky='EW')
+
+        #Show the longest word
+        longestWordStr = "The longest word is: %s with a letter count of: %d" %(self.webScraper.getLongestWord())
+        self.longestWordLabel = Label(self,  text = longestWordStr)
+        self.longestWordLabel.grid(column=2, row=1, sticky="EW")
 
         #Reset the scraper data for the next possible search
         self.webScraper.reset()

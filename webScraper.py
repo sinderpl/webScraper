@@ -79,23 +79,24 @@ class webScraper():
             else:
                 self.alphabetDictionary[char] = 1
 
-    def findCommonLetter(self, dictionary):
-        self.mostCommonLetter = max(dictionary.iteritems(), key=operator.itemgetter(1))[0]
+    def findCommonLetter(self):
+        self.mostCommonLetter = max(self.alphabetDictionary.iteritems(), key=operator.itemgetter(1))[0]
 
     #Prints the output of the self.wordDictionary in a pretty format
-    def prettyPrint(self, dictionary):
+    def prettyPrint(self):
         print "             *Welcome to the web scraper* "
         print "\n*---------------------------------------------*"
         print "| Word                           |  WordCount |"
         print "*---------------------------------------------*"
         #Iterate through each word and print the key and value
-        for word in dictionary.items():
+        for word in self.wordDictionary.items():
             print "|%20s            |     %5d  |" % (word)
         print "*---------------------------------------------*"
         print "| Most common letter: %5s   | Count: %5d  |" % (self.mostCommonLetter, self.alphabetDictionary[self.mostCommonLetter])
         print "*---------------------------------------------*"
         print "| Longest Word: %20s          |" % (self.longestWord)
         print "*---------------------------------------------*"
+        print self.alphabetDictionary
 
 
     #Run Method
@@ -109,7 +110,8 @@ class webScraper():
         for line in data:
             results = parser.feed(line)
         #Find the common Letter in all the data
-        self.findCommonLetter(self.alphabetDictionary)
+        self.findCommonLetter()
+        self.prettyPrint()
 
     #Getters
     def getCommonLetter(self):
@@ -132,7 +134,7 @@ class webScraper():
         #"http://testing-ground.scraping.pro/blocks")
 
         #Call on the print method
-        self.prettyPrint(self.wordDictionary)
+        self.prettyPrint()
 
 #scraper = webScraper()
 #scraper.main()

@@ -12,8 +12,6 @@ class simpleapp_tk(Tkinter.Tk):
         self.parent = parent
         self.initialize()
         self.webScraper = webScraper()
-        self.webScraper.main()
-        #self.webScraper.main()
 
     def initialize(self):
         #Set up the grid and window size
@@ -39,7 +37,7 @@ class simpleapp_tk(Tkinter.Tk):
 
 
     def scrapeButtonClick(self):
-        self.linkVariable.set("Scraping")
+        self.webScraper.runParser(self.linkEntry.get())
         '''
         listb = Listbox(root)
 

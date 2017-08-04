@@ -27,6 +27,10 @@ class MyHTMLParser(HTMLParser):
 
 class webScraper():
     def __init__(self):
+        # used for referencey by the html parser
+        global scrap
+        scrap = self
+        print "             *Welcome to the web scraper* "
         #Stores the words as keys and their occurence counter as the value
         self.wordDictionary = dict({})
         #Stores letters for now, the values will be updated to determine the
@@ -36,9 +40,6 @@ class webScraper():
         self.longestWord = ""
         #Stores the current most occuring letter
         self.mostCommonLetter = "";
-
-
-
 
     # Resets the values to empty so that you can run the scraper again
     def reset(self):
@@ -98,20 +99,17 @@ class webScraper():
 
 
     #Run Method
-    def runParser(self):
+    def runParser(self, link):
         # Instantiate the parser and feed it some HTML
         parser = MyHTMLParser()
 
         #Copy the data from the website specified
-        data = urllib2.urlopen("http://testing-ground.scraping.pro/blocks")
-
-        # Test scraping websites
-        #"http://webscraper.io/test-sites/e-commerce/allinone/computers")
-        #"http://testing-ground.scraping.pro/blocks")
-
+        data = urllib2.urlopen(link)
         #The code is usually split into lines so we send it on line by line to the parser
         for line in data:
             results = parser.feed(line)
+        #Find the common Letter in all the data
+        self.findCommonLetter(self.alphabetDictionary)
 
     #Getters
     def getCommonLetter(self):
@@ -126,15 +124,15 @@ class webScraper():
 
     #Main Method
     def main(self):
-        global scrap
-        scrap = self
-        print "             *Welcome to the web scraper* "
         #Run the parser
-        self.runParser()
-        #Find the common Letter
-        self.findCommonLetter(self.alphabetDictionary)
+        self.runParser("http://testing-ground.scraping.pro/blocks")
+
+        # Test scraping websites
+        #"http://webscraper.io/test-sites/e-commerce/allinone/computers")
+        #"http://testing-ground.scraping.pro/blocks")
+
         #Call on the print method
         self.prettyPrint(self.wordDictionary)
 
-scraper = webScraper()
-scraper.main()
+#scraper = webScraper()
+#scraper.main()

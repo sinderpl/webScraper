@@ -19,6 +19,18 @@ mostCommonLetter = "";
 pattern = re.compile(r'([a-zA-Z]+)')
 
 
+
+# Resets the values to empty so that you can run the scraper again
+def reset():
+    global longestWord
+    longestWord = ""
+    global mostCommonLetter
+    mostCommonLetter = ""
+
+    alphabetDictionary = dict({})
+    wordDictionary = dict ({})
+
+
 #Checks whether the words are already in dictionary
 # If true it updates to the counter to the new value
 # If false it adds the word with a initial count of 1
@@ -54,7 +66,6 @@ def countLetters(word):
 def findCommonLetter(dictionary):
     global mostCommonLetter
     mostCommonLetter = max(dictionary.iteritems(), key=operator.itemgetter(1))[0]
-    print mostCommonLetter
 
 #Prints the output of the wordDictionary in a pretty format
 def prettyPrint(dictionary):
@@ -97,8 +108,21 @@ def runParser():
     #"http://webscraper.io/test-sites/e-commerce/allinone/computers")
     #"http://testing-ground.scraping.pro/blocks")
 
+    #The code is usually split into lines so we send it on line by line to the parser
     for line in data:
         parser.feed(line)
+
+#Getters
+
+def getCommonLetter():
+    return mostCommonLetter
+
+def getLongestWord():
+    return longestWord
+
+def getWordDictionary():
+    return wordDictionary
+
 
 #Main Method
 def main():
@@ -113,5 +137,7 @@ def main():
 
     #Call on the print method
     prettyPrint(wordDictionary)
+
+    reset()
 
 if __name__ == "__main__": main()

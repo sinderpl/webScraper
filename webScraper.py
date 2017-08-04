@@ -115,7 +115,7 @@ class webScraper():
 
     #Getters
     def getCommonLetter(self):
-        return self.mostCommonLetter
+        return self.mostCommonLetter, self.alphabetDictionary[self.mostCommonLetter]
 
     def getlongestWord(self):
         return self.longestWord

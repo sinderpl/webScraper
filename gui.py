@@ -13,6 +13,7 @@ class simpleapp_tk(Tkinter.Tk):
         self.initialize()
         self.webScraper = webScraper()
 
+
     def initialize(self):
         #Set up the grid and window size
         self.grid()
@@ -38,22 +39,16 @@ class simpleapp_tk(Tkinter.Tk):
 
     def scrapeButtonClick(self):
         self.webScraper.runParser(self.linkEntry.get())
-        '''
-        listb = Listbox(root)
 
 
-        for word in webScraper.getWordDictionary():
-            tempString = "%"
-            listb.insert(END,)
+        commonLetterStr = "The most common letter is: %s with a count of: %d" % (self.webScraper.getCommonLetter())
+        self.commonLetterLabel = Label(self, text = commonLetterStr)
+        self.commonLetterLabel.grid(column=2,row=0,sticky='EW')
 
-        #Delete the list
-        #listb.delete(0, END)
-        #listb.pack()
-        '''
+        #Reset the scraper data for the next possible search
+        self.webScraper.reset()
 
 if __name__ == "__main__":
-    #Call the scraper
-    #webScraper.main()
     app = simpleapp_tk(None)
     app.title('Web Scraper')
     app.mainloop()

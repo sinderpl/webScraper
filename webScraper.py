@@ -30,7 +30,6 @@ class webScraper():
         # used for referencey by the html parser
         global scrap
         scrap = self
-        print "             *Welcome to the web scraper* "
         #Stores the words as keys and their occurence counter as the value
         self.wordDictionary = dict({})
         #Stores letters for now, the values will be updated to determine the
@@ -85,6 +84,7 @@ class webScraper():
 
     #Prints the output of the self.wordDictionary in a pretty format
     def prettyPrint(self, dictionary):
+        print "             *Welcome to the web scraper* "
         print "\n*---------------------------------------------*"
         print "| Word                           |  WordCount |"
         print "*---------------------------------------------*"

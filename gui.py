@@ -1,5 +1,5 @@
 import Tkinter
-import webScraper
+from webScraper import webScraper
 from Tkinter import *
 
 
@@ -11,11 +11,16 @@ class simpleapp_tk(Tkinter.Tk):
         Tkinter.Tk.__init__(self,parent)
         self.parent = parent
         self.initialize()
+        self.webScraper = webScraper()
+        self.webScraper.main()
+        #self.webScraper.main()
 
     def initialize(self):
         #Set up the grid and window size
         self.grid()
         self.geometry("800x800")
+
+
 
         #Set up the link entry area
         self.labelAdress = Label(self,text = "Please enter the link you wish to scrape: ")
@@ -26,9 +31,15 @@ class simpleapp_tk(Tkinter.Tk):
         self.linkEntry = Tkinter.Entry(self,textvariable=self.linkVariable)
         self.linkEntry.grid(column=0,row=1,sticky='EW')
 
+        #Set up the button
+        self.scrapeButton = Tkinter.Button(self,text="Scrape the web",
+                                command=self.scrapeButtonClick)
+        self.scrapeButton.grid(column=1, row=1)
 
 
 
+    def scrapeButtonClick(self):
+        self.linkVariable.set("Scraping")
         '''
         listb = Listbox(root)
 

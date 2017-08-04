@@ -17,7 +17,7 @@ alphabetDictionary = dict({"a" : 0 , "b" : 0, "c": 0 ,"d" : 0, "e" : 0, "f" : 0,
  #Stores the current longest word
 longestWord = ""
 #Stores the current most occuring letter
-commonLetter = "e";
+mostCommonLetter = "";
 #The regex pattern that matches words, pre compiled for later use
 pattern = re.compile(r'([a-zA-Z]+)')
 
@@ -33,15 +33,14 @@ def addWordsFromLine(words):
         #If the word is already in there update its occurence counter
         if word in wordDictionary:
             wordDictionary[word] += 1
-            countLetters(word)
             #wordDictionary.get(word) and wordDictionary.update({word: wordDictionary[word]+1})
         #Otherwise add the word and initialize with a value of 1
         else:
-            countLetters(word)
             wordDictionary[word] = 1
             #Check whether the word is longer than the current longest on
             if len(word) > len(longestWord):
                 longestWord = word
+        countLetters(word)
 
 #Counts the letters in each word and adds them to corresponding ones
 def countLetters(word):
@@ -51,11 +50,12 @@ def countLetters(word):
         alphabetDictionary[char] += 1
 
 def findCommonLetter(dictionary):
-    commonLetter = max(dictionary.iteritems(), key=operator.itemgetter(1))[0]
-
+    global mostCommonLetter
+    mostCommonLetter = max(dictionary.iteritems(), key=operator.itemgetter(1))[0]
+    print mostCommonLetter
 
 #Prints the output of the wordDictionary in a pretty format
-def printDictionaryWords(dictionary):
+def prettyPrint(dictionary):
     print "\n*---------------------------------------------*"
     print "| Word                           |  WordCount |"
     print "*---------------------------------------------*"
@@ -63,7 +63,7 @@ def printDictionaryWords(dictionary):
     for word in dictionary.items():
         print "|%20s            |     %5d  |" % (word)
     print "*---------------------------------------------*"
-    print "| Most common letter: %5s   | Count: %5d  |" % (commonLetter, alphabetDictionary[commonLetter])
+    print "| Most common letter: %5s   | Count: %5d  |" % (mostCommonLetter, alphabetDictionary[mostCommonLetter])
     print "*---------------------------------------------*"
     print "| Longest Word: %20s          |" % (longestWord)
     print "*---------------------------------------------*"
@@ -110,6 +110,6 @@ def main():
     findCommonLetter(alphabetDictionary)
 
     #Call on the print method
-    printDictionaryWords(wordDictionary)
+    prettyPrint(wordDictionary)
 
 if __name__ == "__main__": main()

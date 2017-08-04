@@ -10,10 +10,7 @@ import operator
 wordDictionary = dict({})
 #Stores letters for now, the values will be updated to determine the
 # most occuring letter
-alphabetDictionary = dict({"a" : 0 , "b" : 0, "c": 0 ,"d" : 0, "e" : 0, "f" : 0, "g" : 0,
-"h" : 0, "i" : 0 , "j" : 0, "k" : 0, "l" : 0 , "m" : 0, "n" : 0, "o" : 0, "p": 0,
-"q": 0, "r" : 0, "s" : 0, "t" : 0, "u" : 0, "v": 0, "w" : 0, "x" : 0,
- "y" : 0, "z" : 0})
+alphabetDictionary  = dict({})
  #Stores the current longest word
 longestWord = ""
 #Stores the current most occuring letter
@@ -42,12 +39,17 @@ def addWordsFromLine(words):
                 longestWord = word
         countLetters(word)
 
-#Counts the letters in each word and adds them to corresponding ones
+#Counts the letters in each word and adds them to corresponding keys in a dictionary
 def countLetters(word):
-    #TODO Could be updated to add chars to the dictionary as you go along
+    #Makes sure the characters are uniform
     word = word.lower()
     for char in word:
-        alphabetDictionary[char] += 1
+        #Adds to the key value count if it is already in the dictionary
+        if char in alphabetDictionary:
+            alphabetDictionary[char] += 1
+        #Adds the new key to the dictionary with inital value of 1
+        else:
+            alphabetDictionary[char] = 1
 
 def findCommonLetter(dictionary):
     global mostCommonLetter

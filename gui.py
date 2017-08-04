@@ -1,9 +1,7 @@
 import Tkinter
 from webScraper import webScraper
 from Tkinter import *
-
-
-
+import ttk
 
 class simpleapp_tk(Tkinter.Tk):
 
@@ -18,8 +16,6 @@ class simpleapp_tk(Tkinter.Tk):
         #Set up the grid and window size
         self.grid()
         self.geometry("650x500")
-
-
 
         #Set up the link entry area
         self.labelAdress = Label(self,text = "Please enter the link you wish to scrape: ")
@@ -52,15 +48,20 @@ class simpleapp_tk(Tkinter.Tk):
         self.longestWordLabel.grid(column=0, row=3, sticky="EW")
 
         #Show the words and their occurence countLetters
-        self.listBoxWords = Listbox(self, height= 30, width = 50)
+        #self.listBoxWords = Listbox(self, height= 30, width = 50)
+        #for word in self.webScraper.getWordDictionary():
+        #    tempString = "  %s       %15d" %(self.webScraper.getWordCount(word))
+        #    self.listBoxWords.insert(0,tempString)
+        #self.listBoxWords.grid(column=0, row=4, sticky="SW")
+        tree = ttk.Treeview()
+        tree["columns"] = ("one")
+        tree.column("one", width = 20)
+        tree.heading("one", text="Word Occurence: ")
         for word in self.webScraper.getWordDictionary():
-            tempString = "  %s    :   %3d" %(self.webScraper.getWordCount(word))
-            self.listBoxWords.insert(0,tempString)
-
-        self.listBoxWords.grid(column=0, row=4, sticky="SW")
-            #self.listBoxWords.pack()
-
-
+            tree.insert("", 0,text=word,  values=(self.webScraper.getWordCount(word)))
+            #tempString = "  %s       %15d" %(self.webScraper.getWordCount(word))
+            #self.listBoxWords.insert(0,tempString)
+        tree.grid(column=0, row=4, sticky="EW")
         #Reset the scraper data for the next possible search
         self.webScraper.reset()
 

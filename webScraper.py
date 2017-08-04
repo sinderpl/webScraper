@@ -123,7 +123,7 @@ class webScraper():
         return self.wordDictionary
 
     def getWordCount(self, word):
-        return word, self.wordDictionary[word]
+        return self.wordDictionary[word]
 
 
     #Main Method

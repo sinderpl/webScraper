@@ -9,6 +9,9 @@ import operator
 
 #The regex pattern that matches words, pre compiled for later use
 pattern = re.compile(r'([a-zA-Z]+)')
+#Needed for reference by the HTML parser
+#Not the most elegant but will do
+scrap = None
 
 # Override of handler methods for the parser
 class MyHTMLParser(HTMLParser):
@@ -20,7 +23,7 @@ class MyHTMLParser(HTMLParser):
         #If the return list is not empty start adding them to the dictionary
         #Through the custom method
         if results:
-            scraper.addWordsFromLine(results)
+            scrap.addWordsFromLine(results)
 
 class webScraper():
     def __init__(self):
@@ -41,7 +44,6 @@ class webScraper():
     def reset(self):
         self.longestWord = ""
         self.mostCommonLetter = ""
-
         self.alphabetDictionary = dict({})
         self.wordDictionary = dict ({})
 
@@ -112,7 +114,6 @@ class webScraper():
             results = parser.feed(line)
 
     #Getters
-
     def getCommonLetter(self):
         return self.mostCommonLetter
 
@@ -125,6 +126,8 @@ class webScraper():
 
     #Main Method
     def main(self):
+        global scrap
+        scrap = self
         print "             *Welcome to the web scraper* "
         #Run the parser
         self.runParser()
@@ -133,6 +136,5 @@ class webScraper():
         #Call on the print method
         self.prettyPrint(self.wordDictionary)
 
-#if __name__ == "__main__": main()
 scraper = webScraper()
 scraper.main()

@@ -96,7 +96,6 @@ class webScraper():
         print "*---------------------------------------------*"
         print "| Longest Word: %20s          |" % (self.longestWord)
         print "*---------------------------------------------*"
-        print self.alphabetDictionary
 
 
     #Run Method
@@ -111,7 +110,7 @@ class webScraper():
             results = parser.feed(line)
         #Find the common Letter in all the data
         self.findCommonLetter()
-        self.prettyPrint()
+        #self.prettyPrint()
 
     #Getters
     def getCommonLetter(self):
@@ -120,8 +119,11 @@ class webScraper():
     def getLongestWord(self):
         return self.longestWord, len(self.longestWord)
 
-    def getwordDictionary(self):
+    def getWordDictionary(self):
         return self.wordDictionary
+
+    def getWordCount(self, word):
+        return word, self.wordDictionary[word]
 
 
     #Main Method

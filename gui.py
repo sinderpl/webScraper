@@ -17,7 +17,7 @@ class simpleapp_tk(Tkinter.Tk):
     def initialize(self):
         #Set up the grid and window size
         self.grid()
-        self.geometry("800x800")
+        self.geometry("650x500")
 
 
 
@@ -44,12 +44,22 @@ class simpleapp_tk(Tkinter.Tk):
         #Show the most common letter count
         commonLetterStr = "The most common letter is: %s with a count of: %d" % (self.webScraper.getCommonLetter())
         self.commonLetterLabel = Label(self, text = commonLetterStr)
-        self.commonLetterLabel.grid(column=2,row=0,sticky='EW')
+        self.commonLetterLabel.grid(column=0,row=2,sticky='EW')
 
         #Show the longest word
         longestWordStr = "The longest word is: %s with a letter count of: %d" %(self.webScraper.getLongestWord())
         self.longestWordLabel = Label(self,  text = longestWordStr)
-        self.longestWordLabel.grid(column=2, row=1, sticky="EW")
+        self.longestWordLabel.grid(column=0, row=3, sticky="EW")
+
+        #Show the words and their occurence countLetters
+        self.listBoxWords = Listbox(self, height= 30, width = 50)
+        for word in self.webScraper.getWordDictionary():
+            tempString = "  %s    :   %3d" %(self.webScraper.getWordCount(word))
+            self.listBoxWords.insert(0,tempString)
+
+        self.listBoxWords.grid(column=0, row=4, sticky="SW")
+            #self.listBoxWords.pack()
+
 
         #Reset the scraper data for the next possible search
         self.webScraper.reset()

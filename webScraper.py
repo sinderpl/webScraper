@@ -39,6 +39,8 @@ class webScraper():
         self.longestWord = ""
         #Stores the current most occuring letter
         self.mostCommonLetter = "";
+        #Set up the parser
+        self.parser = MyHTMLParser()
 
     # Resets the values to empty so that you can run the scraper again
     def reset(self):
@@ -100,14 +102,12 @@ class webScraper():
 
     #Run Method
     def runParser(self, link):
-        # Instantiate the parser and feed it some HTML
-        parser = MyHTMLParser()
 
         #Copy the data from the website specified
         data = urllib2.urlopen(link)
         #The code is usually split into lines so we send it on line by line to the parser
         for line in data:
-            results = parser.feed(line)
+            results = self.parser.feed(line)
         #Find the common Letter in all the data
         self.findCommonLetter()
         #self.prettyPrint()
